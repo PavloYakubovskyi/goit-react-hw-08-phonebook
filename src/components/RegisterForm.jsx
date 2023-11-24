@@ -1,16 +1,17 @@
-import { Button, Flex, Input, Text } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/operations';
+import { Button, Flex, Input, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { logIn } from 'redux/auth/operations';
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const onSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
     dispatch(
-      logIn({
+      register({
+        name: form.elements.name.value,
         email: form.elements.email.value,
         password: form.elements.password.value,
       })
@@ -19,7 +20,6 @@ export const LoginForm = () => {
 
   return (
     <>
-      {' '}
       <form onSubmit={onSubmit} autoComplete="off">
         <Flex
           align="center"
@@ -29,6 +29,12 @@ export const LoginForm = () => {
           maxW="300px"
           m="0 auto"
         >
+          <Input
+            variant="filled"
+            placeholder="Username"
+            type="text"
+            name="name"
+          />
           <Input
             variant="filled"
             placeholder="Email"
@@ -42,11 +48,11 @@ export const LoginForm = () => {
             name="password"
           />
           <Button type="submit" w="100%">
-            Log In
+            Register
           </Button>
         </Flex>
       </form>
-      <Link to="/register">
+      <Link to="/login">
         <Text
           textAlign="center"
           mt="20px"
@@ -55,7 +61,7 @@ export const LoginForm = () => {
           fontWeight="thin"
           _hover={{ color: '#e0e0e0' }}
         >
-          No account? Register now!
+          Log in to your account
         </Text>
       </Link>
     </>
